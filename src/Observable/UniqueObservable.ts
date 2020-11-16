@@ -1,5 +1,5 @@
-import { combineLatest, interval, Observable, of, race } from "rxjs";
-import { catchError, map, repeat, retry, retryWhen, shareReplay, switchMap, tap, timeout } from 'rxjs/operators';
+import { combineLatest, Observable, of } from "rxjs";
+import { catchError, map, repeat, timeout } from 'rxjs/operators';
 import { SystemType } from "../Models/MonitoringSystem";
 import SystemEmitter from "../System/SystemEmitter";
 
