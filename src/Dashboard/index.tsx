@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 import styled from 'styled-components'
-import UniqueObservable, {
+import uniqueObservable$, {
   UniqueObservableType,
 } from '../Observable/UniqueObservable'
 
@@ -27,12 +29,13 @@ export default function Dashboard() {
   >({} as UniqueObservableType)
 
   useEffect(() => {
-    const uniqueObservable = new UniqueObservable()
-    uniqueObservable.subscribe((value: UniqueObservableType) =>
-      setUniqueObservable(value)
-    )
+    const end$ = new Subject();
+    uniqueObservable$.pipe(takeUntil(end$))
+      .subscribe((value: UniqueObservableType) =>
+        setUniqueObservable(value)
+      )
 
-    return uniqueObservable.unsubscribe
+    return () => end$.next();
   }, [])
 
   return (
